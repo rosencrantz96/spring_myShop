@@ -59,8 +59,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 	@Query("select i from Item i where i.price >= ?1 ")
 	List<Item> findByPriceGreaterThan(Integer price);
 	
-	// 2. itemNm이 "테스트 상품1"이고 ItemSellStatus가 sell인 레코드 (네이티브 쿼리로 하니까 안 됨) 
-//	@Query(value = "select * from item i where i.item_nm = :itemNm and i.item_sell_status = :sell", nativeQuery = true)
+	// 2. itemNm이 "테스트 상품1"이고 ItemSellStatus가 sell인 레코드 (네이티브 쿼리로 하니까 안 됨) →:#{#sell.name()} 열거형이 네이티브 쿼리에 쓰일라면 이렇게 써줘야 한대용
+//	@Query(value = "select * from item i where i.item_nm = :itemNm and i.item_sell_status = :#{#sell.name()}", nativeQuery = true)
 //	List<Item> findByItemNmAndItemSellStatusByNative(@Param("itemNm") String itemNm, @Param("sell") ItemSellStatus sell);
 	
 	// 2. 그냥 쿼리로 하니까 됨 미친새끼
