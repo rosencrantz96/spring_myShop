@@ -22,25 +22,25 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
-	
+
 	// 회원가입 화면을 보여주는 곳
 	@GetMapping(value = "/new")
 	public String memberForm(Model model) {
 		model.addAttribute("memberFormDto", new MemberFormDto());
 		return "member/memberForm";
 	}
-	
-	// 회원가입 버튼을 눌렀을 때 실행되는 메소드 
+
+	// 회원가입 버튼을 눌렀을 때 실행되는 메소드
 	@PostMapping(value = "/new")
 	public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-		// @Valid : 유효성을 검증하려는 객체 앞에 붙인다. 
+		// @Valid : 유효성을 검증하려는 객체 앞에 붙인다.
 		// BindingResult: 유효성 검증 후에 결과를 bindingResult에 넣어준다.
 
-		// 에러가 있다면 회원가입 페이지로 이동 
-		if(bindingResult.hasErrors()) {
+		// 에러가 있다면 회원가입 페이지로 이동
+		if (bindingResult.hasErrors()) {
 			return "member/memberForm";
 		}
-		
+
 		try {
 			Member member = Member.createMember(memberFormDto, passwordEncoder);
 			memberService.saveMember(member);
@@ -48,7 +48,21 @@ public class MemberController {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "member/memberForm";
 		}
-		
+
 		return "redirect:/";
 	}
+
+	// 로그인 화면을 보여주는 곳
+	@GetMapping(value = "/login")
+	public String loginMember() {
+		return "member/memberLoginForm";
+	}
+	
+	// 로그인을 실패했을 때
+	@GetMapping(value = "/login/error")
+	public String loginError(Model model) {
+		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+		return "member/memberLoginForm";
+	}
+
 }

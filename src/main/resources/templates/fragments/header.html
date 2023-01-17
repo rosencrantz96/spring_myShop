@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -11,7 +12,7 @@
 		 navbar bg-dark "
 			data-bs-theme="dark">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="/"><img src="../images/logo.png"
+				<a class="navbar-brand" href="/"><img src="/images/logo.png"
 					width="40" alt="로고"></a>
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -21,24 +22,25 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item">
+						<li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
 							<a class="nav-link" href="/admin/item/new">상품등록</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/admin/items">상품관리</a>
+							<a class="nav-link" href="/admin/items" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">상품관리</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/cart">장바구니</a>
+							<a class="nav-link" href="/cart" sec:authorize="isAuthenticated()">장바구니</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/orders">구매이력</a>
+							<a class="nav-link" href="/orders" sec:authorize="isAuthenticated()">구매이력</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/members/login">로그인</a>
+							<a class="nav-link" href="/members/login" sec:authorize="isAnonymous()">로그인</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/members/logout">로그아웃</a>
+							<a class="nav-link" href="/members/logout" sec:authorize="isAuthenticated()">로그아웃</a>
 						</li>
+					</ul>
 					<form class="d-flex" role="search">
 						<input class="form-control me-2" type="search"
 							placeholder="Search" aria-label="Search">
