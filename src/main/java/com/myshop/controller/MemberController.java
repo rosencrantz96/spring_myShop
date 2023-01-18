@@ -1,7 +1,11 @@
 package com.myshop.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myshop.dto.MemberFormDto;
 import com.myshop.entity.Member;
@@ -58,6 +63,25 @@ public class MemberController {
 		return "member/memberLoginForm";
 	}
 	
+	@Autowired
+	private final SessionManager sessionManager;
+
+	/*
+	// 쿠키, 세션 테스트
+	@PostMapping(value = "/login2")
+	public String loginMember2(HttpServletResponse response, HttpSession session, @RequestParam String email) {
+		System.out.println("email: " + email);
+		Cookie idCookie = new Cookie("userCookieId", email);
+		response.addCookie(idCookie);
+		
+		session.setAttribute("userSessionId2", email);
+		
+		sessionManager.createSession(email, response);
+		
+		return "member/memberLoginForm";
+	}
+	*/
+
 	// 로그인을 실패했을 때
 	@GetMapping(value = "/login/error")
 	public String loginError(Model model) {
