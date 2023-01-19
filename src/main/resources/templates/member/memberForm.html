@@ -9,7 +9,7 @@
 <th:block layout:fragment="script">
 	<script th:inline="javascript"> // th:inline="javascript" 이 부분을 꼭 써주고 사용해야 한다!
 		// 회원가입이 실패했을 때 	
-		$(document).ready(function {
+		$(document).ready(function() {
 			var errorMessage =[[${errorMessage}]];
 			if(errorMessage != null) {
 				alert(errorMessage);
