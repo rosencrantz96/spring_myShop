@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Member {
+public class Member extends BaseEntity { 
 	@Id // pk
 	@Column(name="member_id")
 	@GeneratedValue(strategy = GenerationType.AUTO) // 생성전략 자동
