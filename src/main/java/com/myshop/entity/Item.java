@@ -3,6 +3,8 @@ package com.myshop.entity;
 import javax.persistence.*;
 
 import com.myshop.constant.ItemSellStatus;
+import com.myshop.dto.ItemDto;
+import com.myshop.dto.ItemFormDto;
 
 import lombok.*;
 
@@ -34,4 +36,13 @@ public class Item extends BaseEntity { // Item 테이블의 각각의 컬럼들
 	
 	@Enumerated(EnumType.STRING) // 열거형 타입! 
 	private ItemSellStatus itemSellStatus; // 상품 판매 상태 
+
+	public void upadateItem(ItemFormDto itemFormDto) {
+		this.itemNm = itemFormDto.getItemNm();
+		this.price = itemFormDto.getPrice();
+		this.stockNumber = itemFormDto.getStockNumber();
+		this.itemDetail = itemFormDto.getItemDetail();
+		this.itemSellStatus = itemFormDto.getItemSellStatus();
+		
+	}
 }
