@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.myshop.dto.ItemFormDto;
 import com.myshop.dto.ItemImgDto;
+import com.myshop.dto.ItemSearchDto;
 import com.myshop.entity.Item;
 import com.myshop.entity.ItemImg;
 import com.myshop.repository.ItemImgRepository;
@@ -89,5 +92,11 @@ public class ItemService {
 			itemImgService.updateItemImg(itemImgIds.get(i), itemImgFileList.get(i));
 		}
 		return item.getId();
+	}
+	
+	// 상품 가져오기 
+	@Transactional(readOnly = true) // select에 오는건 readonly를 해주는 것이 좋다! 변경감지 안 하니까
+	public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+		return itemRepository.getAdminItemPage(itemSearchDto, pageable);
 	}
 }
