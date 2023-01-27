@@ -79,20 +79,23 @@ public class ItemService {
 
 	}
 
-	// 상품 수정
-	public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
-		Item item = itemRepository.findById(itemFormDto.getId()).orElseThrow(EntityNotFoundException::new);
-
-		item.upadateItem(itemFormDto);
-
-		List<Long> itemImgIds = itemFormDto.getItemImgIds(); // 상품 이미지 아이디 리스트를 조회
-
-		for (int i = 0; i < itemImgFileList.size(); i++) {
-			itemImgService.updateItemImg(itemImgIds.get(i), itemImgFileList.get(i));
+	//상품 수정
+		public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
+			
+			Item item = itemRepository.findById(itemFormDto.getId())
+					.orElseThrow(EntityNotFoundException::new);
+			
+			item.updateItem(itemFormDto);
+			
+			List<Long> itemImgIds = itemFormDto.getItemImgIds(); //상품 이미지 아이디 리스트를 조회
+			
+			for(int i=0; i<itemImgFileList.size(); i++) {
+				itemImgService.updateItemImg(itemImgIds.get(i), itemImgFileList.get(i));
+			}
+			
+			return item.getId();
+			
 		}
-		return item.getId();
-	}
-
 	// 상품 가져오기
 	@Transactional(readOnly = true) // select에 오는건 readonly를 해주는 것이 좋다! 변경감지 안 하니까
 	public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {

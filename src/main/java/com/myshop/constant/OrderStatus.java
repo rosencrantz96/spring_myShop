@@ -1,5 +1,5 @@
 package com.myshop.constant;
 
 public enum OrderStatus {
-	ORDER, CANCLE
+	ORDER, CANCLE, CANCEL
 }
